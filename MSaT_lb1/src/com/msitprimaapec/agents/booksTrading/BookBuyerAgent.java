@@ -102,8 +102,9 @@ public class BookBuyerAgent extends Agent {
                         // Purchase order reply received
                         if (reply.getPerformative() == ACLMessage.INFORM) {
                             // Purchase successful. We can terminate
-                            System.out.println(targetBookTitle + " successfully purchased.");
+                            System.out.println(myAgent.getAID().getName() + ": " + targetBookTitle + " successfully purchased.");
                             System.out.println("Price = " + bestPrice);
+                            System.out.println("Bought from " + reply.getSender().getName());
                             myAgent.doDelete();
                         }
                         step = 4;
@@ -113,7 +114,10 @@ public class BookBuyerAgent extends Agent {
                     break;
             }
         }
-
+        protected void takeDown() {
+            // Printout a dismissal message
+            System.out.println("Buyer-agent "+getAID().getName()+" terminating.");
+        }
         public boolean done() {
             return ((step == 2 && bestSeller == null) || step == 4);
         }

@@ -17,17 +17,22 @@ public class BookSellerAgent extends Agent {
         // Create the catalogue
         catalogue = new Hashtable();
         Object[] args = getArguments();
+        String out ="";
         if (args != null && args.length > 0) {
-            System.out.println("Hello!");
+            out+="Hello! It's seller-agent " + getAID().getName() + ". And I am ready!" +
+                    "\n I have some books:\n";
+
             args = ((String)args[0]).split(" ");
             for (int i = 0; i < args.length / 2; i++) {
                 catalogue.put((String) args[2 * i], Integer.valueOf((String) args[2 * i + 1]));
+                out += args[2 * i] + ": " + args[2 * i + 1] + "$\n";
             }
         } else {
             // Make the agent terminate
-            System.out.println("No books catalog specified");
+            out+="No books catalog specified";
             doDelete();
         }
+        System.out.println(out);
         // Add the behaviour serving requests for offer from buyer agents
         addBehaviour(new OfferRequestsServer());
         // Add the behaviour serving purchase orders from buyer agents

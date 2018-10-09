@@ -35,6 +35,11 @@ public class BookBuyerAgent extends Agent {
         }
     }
 
+    protected void takeDown() {
+        // Printout a dismissal message
+        System.out.println("Buyer-agent "+getAID().getName()+" terminating.");
+    }
+
     private class RequestPerformer extends Behaviour {
         private AID bestSeller; // The agent who provides the best offer
         private int bestPrice; // The best offered price
@@ -114,10 +119,7 @@ public class BookBuyerAgent extends Agent {
                     break;
             }
         }
-        protected void takeDown() {
-            // Printout a dismissal message
-            System.out.println("Buyer-agent "+getAID().getName()+" terminating.");
-        }
+
         public boolean done() {
             return ((step == 2 && bestSeller == null) || step == 4);
         }

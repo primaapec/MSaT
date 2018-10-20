@@ -51,7 +51,7 @@ public class BookSellerAgent extends Agent {
         catch (FIPAException fe) {
             fe.printStackTrace();
         }
-        System.out.format("Agent %s have successfully been added to DF!", getAID().getName());
+        System.out.format("Agent %s have successfully been added to DF!\n", getAID().getName());
         // Add the behaviour serving requests for offer from buyer agents
         addBehaviour(new OfferRequestsServer());
         // Add the behaviour serving purchase orders from buyer agents

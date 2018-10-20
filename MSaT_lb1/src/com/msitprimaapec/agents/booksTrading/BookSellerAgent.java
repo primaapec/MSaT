@@ -2,6 +2,10 @@ package com.msitprimaapec.agents.booksTrading;
 
 import jade.core.Agent;
 import jade.core.behaviours.*;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
@@ -30,9 +34,24 @@ public class BookSellerAgent extends Agent {
         } else {
             // Make the agent terminate
             out+="No books catalog specified";
+            System.out.println(out);
             doDelete();
+            return;
         }
         System.out.println(out);
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.setName(getAID());
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType("book-selling");
+        sd.setName("JADE-book-trading");
+        dfd.addServices(sd);
+        try {
+            DFService.register(this, dfd);
+        }
+        catch (FIPAException fe) {
+            fe.printStackTrace();
+        }
+        System.out.format("Agent %s have successfully been added to DF!", getAID().getName());
         // Add the behaviour serving requests for offer from buyer agents
         addBehaviour(new OfferRequestsServer());
         // Add the behaviour serving purchase orders from buyer agents
@@ -41,6 +60,13 @@ public class BookSellerAgent extends Agent {
 
     // Put agent clean-up operations here
     protected void takeDown() {
+        // Deregister from the yellow pages
+        try {
+            DFService.deregister(this);
+        }
+        catch (FIPAException fe) {
+            fe.printStackTrace();
+        }
         // Printout a dismissal message
         System.out.println("Seller-agent " + getAID().getName() + " terminating.");
     }

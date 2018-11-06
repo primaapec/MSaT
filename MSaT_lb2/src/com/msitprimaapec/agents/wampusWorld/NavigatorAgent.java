@@ -65,22 +65,16 @@ public class NavigatorAgent extends Agent {
         }
 
         public void action() {
-            if (msg != null) {
-                String content = msg.getContent();
-                ACLMessage reply = msg.createReply();
-                if (content != null) {
-                    reply.setPerformative(ACLMessage.PROPOSE);
-                    reply.setContent(ResponseAction(content));
-                } else {
-                    reply.setPerformative(ACLMessage.REFUSE);
-                    reply.setContent("not-available");
-                }
-                myAgent.send(reply);
+            String content = msg.getContent();
+            ACLMessage reply = msg.createReply();
+            if (content != null) {
+                reply.setPerformative(ACLMessage.PROPOSE);
+                reply.setContent(ResponseAction(content));
+            } else {
+                reply.setPerformative(ACLMessage.REFUSE);
+                reply.setContent("not-available");
             }
-            else
-            {
-                block();
-            }
+            myAgent.send(reply);
         }
 
         private String ResponseAction(String content) {

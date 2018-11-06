@@ -33,9 +33,23 @@ public class NavigatorAgent extends Agent {
         }
         addBehaviour(new PerceptRequestBehavior());
     }
+
+    @Override
+    protected void takeDown() {
+        try {
+            DFService.deregister(this);
+        }
+        catch (FIPAException fe) {
+            fe.printStackTrace();
+        }
+        System.out.println("Navigator agent terminating...");
+    }
+
     private class PerceptRequestBehavior extends CyclicBehaviour {
         public void action() {
-            ACLMessage msg = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
+            ACLMessage msg = myAgent.receive(MessageTemplate.and(
+                    MessageTemplate.MatchPerformative(ACLMessage.REQUEST),
+                    MessageTemplate.MatchConversationId("Ask-for-action")));
             if (msg != null) {
                 if (spelAgent == null)
                     spelAgent = msg.getSender();

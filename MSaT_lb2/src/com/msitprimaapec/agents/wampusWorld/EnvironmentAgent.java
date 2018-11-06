@@ -31,7 +31,17 @@ public class EnvironmentAgent extends Agent {
         }
         addBehaviour(new RequestBehavior());
     }
-
+    
+    @Override
+    protected void takeDown() {
+        try {
+            DFService.deregister(this);
+        }
+        catch (FIPAException fe) {
+            fe.printStackTrace();
+        }
+        System.out.println("Environment agent terminating...");
+    }
     private class RequestBehavior extends CyclicBehaviour {
         public void action() {
             ACLMessage msg = myAgent.receive();

@@ -68,15 +68,9 @@ public class EnvironmentAgent extends Agent {
         }
 
         public void action() {
-            String content = msg.getContent();
             ACLMessage reply = msg.createReply();
-            if (content != null) {
-                reply.setPerformative(ACLMessage.INFORM);
-                reply.setContent(GeneratePerceptSequence());
-            } else {
-                reply.setPerformative(ACLMessage.REFUSE);
-                reply.setContent("not-available");
-            }
+            reply.setPerformative(ACLMessage.INFORM);
+            reply.setContent(GeneratePerceptSequence());
             myAgent.send(reply);
         }
 

@@ -14,7 +14,7 @@ import jdk.jshell.spi.ExecutionControl;
 
 public class NavigatorAgent extends Agent {
 
-    AID spelAgent;
+    private AID spelAgent;
 
     @Override
     protected void setup() {

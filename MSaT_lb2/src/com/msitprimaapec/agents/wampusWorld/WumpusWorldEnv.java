@@ -147,13 +147,9 @@ public class WumpusWorldEnv {
                 }
                 break;
             case "Climb":
-                if (ap.getX() != 1 || ap.getY() != 1)
-                    throw new IllegalStateException("Agent isn't at the starting point (1,1)!");
-                else {
-                    inGame = false;
-                    if (agentHasGold)
-                        record += 1000;
-                }
+                inGame = false;
+                if (agentHasGold)
+                    record += 1000;
                 break;
             case "Grab":
                 if (checkGlitter(ap.getX(), ap.getY())) {

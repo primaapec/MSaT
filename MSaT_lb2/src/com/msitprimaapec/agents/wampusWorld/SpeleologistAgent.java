@@ -72,7 +72,7 @@ public class SpeleologistAgent extends Agent {
                     ACLMessage reply = myAgent.receive(mt);
                     if (reply != null) {
                         if (reply.getPerformative() == ACLMessage.INFORM) {
-                            message = PrepareSentance(reply.getContent());
+                            message = PrepareSentence(reply.getContent());
                             step++;
                         }
                     } else {
@@ -94,7 +94,7 @@ public class SpeleologistAgent extends Agent {
                     ACLMessage reply2 = myAgent.receive(mt);
                     if (reply2 != null) {
                         if (reply2.getPerformative() == ACLMessage.PROPOSE) {
-                            message = ProcessSentance(reply2.getContent());
+                            message = ProcessSentence(reply2.getContent());
                             step++;
                         }
                     } else {
@@ -125,12 +125,23 @@ public class SpeleologistAgent extends Agent {
             }
         }
 
-        private String ProcessSentance(String content) {
-            // TODO process action message and generate action message for environment
-            return "";
+        private String ProcessSentence(String content) {
+            if (content.contains("forward"))
+                return "Forward";
+            else if (content.contains("shoot"))
+                return "Shoot";
+            else if (content.contains("climb"))
+                return "Climb";
+            else if (content.contains("grab"))
+                return "Grab";
+            else if (content.contains("right"))
+                return "TurnRight";
+            else if (content.contains("left"))
+                return "TurnLeft";
+            throw new IllegalStateException("Unexpected action!");
         }
 
-        private String PrepareSentance(String content) {
+        private String PrepareSentence(String content) {
             StringBuilder temp = new StringBuilder();
             for (String s: content.split(" ")) {
                 switch (s) {

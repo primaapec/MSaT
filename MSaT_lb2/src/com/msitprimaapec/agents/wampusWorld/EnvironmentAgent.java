@@ -1,5 +1,6 @@
 package com.msitprimaapec.agents.wampusWorld;
 
+import aima.core.environment.wumpusworld.AgentPercept;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -19,6 +20,9 @@ public class EnvironmentAgent extends Agent {
     @Override
     protected void setup() {
         System.out.println("Environment agent " + getAID().getName() + " is ready!");
+
+        wwe = new WumpusWorldEnv();
+
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID());
         ServiceDescription sd = new ServiceDescription();
@@ -87,9 +91,30 @@ public class EnvironmentAgent extends Agent {
         }
 
         private String GeneratePerceptSequence() {
-            String reply = "";
-            // TODO generate percept string
-            return reply;
+            StringBuilder reply = new StringBuilder();
+            reply.append("[");
+            AgentPercept ap = wwe.getPercept();
+            if (ap.isStench())
+                reply.append("Stench, ");
+            else
+                reply.append("None, ");
+            if (ap.isBreeze())
+                reply.append("Breeze, ");
+            else
+                reply.append("None, ");
+            if (ap.isGlitter())
+                reply.append("Glitter, ");
+            else
+                reply.append("None, ");
+            if (ap.isBump())
+                reply.append("Bump, ");
+            else
+                reply.append("None, ");
+            if (ap.isScream())
+                reply.append("Scream]");
+            else
+                reply.append("None]");
+            return reply.toString();
         }
     }
 

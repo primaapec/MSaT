@@ -11,6 +11,8 @@ import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
+import java.util.Random;
+
 public class SpeleologistAgent extends Agent {
 
     private AID na; // NavigatorAgent
@@ -54,6 +56,10 @@ public class SpeleologistAgent extends Agent {
         private int step = 0;
         private MessageTemplate mt;
         private String message;
+
+        private String[] dict = {"There is a %s here. ",
+                "I feel %s here. ",
+                "It's a %s here. "};
 
         @Override
         public void action() {
@@ -143,13 +149,16 @@ public class SpeleologistAgent extends Agent {
 
         private String PrepareSentence(String content) {
             StringBuilder temp = new StringBuilder();
-            for (String s: content.split(" ")) {
-                switch (s) {
-                    // TODO generating environment state message
-                    default:
-                        temp.append("None");
-                }
-            }
+            if (content.contains("Stench"))
+                temp.append(String.format(dict[new Random().nextInt(3)], "stench"));
+            if (content.contains("Breeze"))
+                temp.append(String.format(dict[new Random().nextInt(3)], "breeze"));
+            if (content.contains("Glitter"))
+                temp.append(String.format(dict[new Random().nextInt(3)], "glitter"));
+            if (content.contains("Bump"))
+                temp.append(String.format(dict[new Random().nextInt(3)], "bump"));
+            if (content.contains("Scream"))
+                temp.append(String.format(dict[new Random().nextInt(3)], "scream"));
             return temp.toString();
         }
 

@@ -184,4 +184,12 @@ public class WumpusWorldEnv {
     private boolean checkWumpus(int x, int y) {
         return (rooms[x][y]/WUMPUS) % 2 == 1;
     }
+
+    public AgentPercept getPercept() {
+        return futurePercept;
+    }
+
+    public int getRecord() {
+        return record;
+    }
 }

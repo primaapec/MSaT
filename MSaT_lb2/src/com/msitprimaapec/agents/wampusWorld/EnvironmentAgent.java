@@ -129,8 +129,19 @@ public class EnvironmentAgent extends Agent {
         }
 
         public void action() {
-            String content = msg.getContent();
-            // TODO process message and change the world
+            String content = msg.getContent().toLowerCase();
+            if (content.contains("forward"))
+                wwe.ChangeWorld("Forward");
+            else if (content.contains("shoot"))
+                wwe.ChangeWorld("Shoot");
+            else if (content.contains("climb"))
+                wwe.ChangeWorld("Climb");
+            else if (content.contains("grab"))
+                wwe.ChangeWorld("Grab");
+            else if (content.contains("right"))
+                wwe.ChangeWorld("TurnRight");
+            else if (content.contains("left"))
+                wwe.ChangeWorld("TurnLeft");
         }
     }
 }

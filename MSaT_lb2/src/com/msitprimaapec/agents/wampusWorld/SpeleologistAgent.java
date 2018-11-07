@@ -69,9 +69,9 @@ public class SpeleologistAgent extends Agent {
                     requestPercept.addReceiver(ea);
                     requestPercept.setConversationId("percept");
                     myAgent.send(requestPercept);
-                    mt = MessageTemplate.and(
-                            MessageTemplate.MatchConversationId("percept"),
-                            MessageTemplate.MatchInReplyTo(requestPercept.getReplyWith()));
+                    System.out.println(getAID().getLocalName() + ": Gathering information about Environment.");
+                    mt = MessageTemplate.MatchConversationId("percept");
+
                     step++;
                     break;
                 case 1:
@@ -90,10 +90,9 @@ public class SpeleologistAgent extends Agent {
                     askForAction.addReceiver(na);
                     askForAction.setContent(message);
                     askForAction.setConversationId("Ask-for-action");
-                    step++;
-                    mt = MessageTemplate.and(
-                            MessageTemplate.MatchConversationId("Ask-for-action"),
-                            MessageTemplate.MatchInReplyTo(askForAction.getReplyWith()));
+                    myAgent.send(askForAction);
+                    System.out.println(getAID().getLocalName() + ": " + message);
+                    mt = MessageTemplate.MatchConversationId("Ask-for-action");
                     step++;
                     break;
                 case 3:
@@ -106,7 +105,6 @@ public class SpeleologistAgent extends Agent {
                     } else {
                         block();
                     }
-                    step++;
                     break;
                 case 4:
                     ACLMessage action = new ACLMessage(ACLMessage.CFP);
@@ -114,6 +112,7 @@ public class SpeleologistAgent extends Agent {
                     action.setContent(message);
                     action.setConversationId("action");
                     myAgent.send(action);
+                    System.out.println(getAID().getLocalName() + ": "+ message);
                     mt = MessageTemplate.and(
                             MessageTemplate.MatchConversationId("action"),
                             MessageTemplate.MatchInReplyTo(action.getReplyWith()));
@@ -159,6 +158,7 @@ public class SpeleologistAgent extends Agent {
                 temp.append(String.format(dict[new Random().nextInt(3)], "bump"));
             if (content.contains("Scream"))
                 temp.append(String.format(dict[new Random().nextInt(3)], "scream"));
+            temp.append("What do I need to do?");
             return temp.toString();
         }
 

@@ -64,6 +64,7 @@ public class EnvironmentAgent extends Agent {
                     ACLMessage reply = msg.createReply();
                     reply.setPerformative(ACLMessage.REFUSE);
                     reply.setContent("not-available");
+                    myAgent.send(reply);
                 }
             }
             else
@@ -88,6 +89,7 @@ public class EnvironmentAgent extends Agent {
             reply.setPerformative(ACLMessage.INFORM);
             reply.setContent(GeneratePerceptSequence());
             myAgent.send(reply);
+            System.out.println(getAID().getLocalName() + ": " + reply.getContent());
         }
 
         private String GeneratePerceptSequence() {

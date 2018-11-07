@@ -39,7 +39,7 @@ public class WumpusWorldEnv {
         setWumpus(wi, wj);
         setGold(gi, gj);
         for (int i= 0; i < px.length; i++)
-            setPit(px[i],px[i]);
+            setPit(px[i],py[i]);
         futurePercept = new AgentPercept(checkStench(1,1),checkBreeze(1,1),checkGlitter(1,1),false,false);
     }
 

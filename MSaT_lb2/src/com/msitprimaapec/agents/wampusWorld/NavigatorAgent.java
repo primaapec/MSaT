@@ -1,6 +1,7 @@
 package com.msitprimaapec.agents.wampusWorld;
 
 import aima.core.agent.Action;
+import aima.core.agent.impl.DynamicAction;
 import aima.core.environment.wumpusworld.*;
 import jade.core.AID;
 import jade.core.Agent;
@@ -103,17 +104,18 @@ public class NavigatorAgent extends Agent {
                 reply.setContent("not-available");
             }
             myAgent.send(reply);
+            System.out.println(getAID().getLocalName() + ": " + reply.getContent());
         }
 
         private String GenerateActionMessage(Action act) {
-            String a = act.toString();
+            String a = ((DynamicAction)act).getName();
             if (a.contains("Turn"))
                 a = "turn " + a.toLowerCase().substring(4);
             else if (a.equals("Forward"))
                     a = "go forward";
             else
                 a = a.toLowerCase();
-            return String.format(dict[new Random().nextInt(3)], act);
+            return String.format(dict[new Random().nextInt(3)], a);
         }
 
         private AgentPercept ExtractPercept(String content) {

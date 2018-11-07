@@ -1,5 +1,7 @@
 package com.msitprimaapec.agents.wampusWorld;
 
+import aima.core.agent.Action;
+import aima.core.environment.wumpusworld.*;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -12,12 +14,23 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jdk.jshell.spi.ExecutionControl;
 
+import java.util.Random;
+
 public class NavigatorAgent extends Agent {
 
     private AID spelAgent;
 
+    private HybridWumpusAgent agentLogic;
+
+    private String[] dict = {"You need to %s.",
+        "You should %s.",
+        "What you need to do is to %s."};
+
     @Override
     protected void setup() {
+
+        agentLogic = new HybridWumpusAgent();
+
         System.out.println("Navigator agent " + getAID().getLocalName() + " is ready!");
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID());
@@ -83,7 +96,8 @@ public class NavigatorAgent extends Agent {
             ACLMessage reply = msg.createReply();
             if (content != null) {
                 reply.setPerformative(ACLMessage.PROPOSE);
-                reply.setContent(ResponseAction(content));
+                Action act = agentLogic.execute(ExtractPercept(content));
+                reply.setContent(GenerateActionMessage(act));
             } else {
                 reply.setPerformative(ACLMessage.REFUSE);
                 reply.setContent("not-available");
@@ -91,10 +105,25 @@ public class NavigatorAgent extends Agent {
             myAgent.send(reply);
         }
 
-        private String ResponseAction(String content) {
-            String reply = "";
-            // TODO process message and generate action
-            return reply;
+        private String GenerateActionMessage(Action act) {
+            String a = act.toString();
+            if (a.contains("Turn"))
+                a = "turn " + a.toLowerCase().substring(4);
+            else if (a.equals("Forward"))
+                    a = "go forward";
+            else
+                a = a.toLowerCase();
+            return String.format(dict[new Random().nextInt(3)], act);
+        }
+
+        private AgentPercept ExtractPercept(String content) {
+            content = content.toLowerCase();
+            AgentPercept res = new AgentPercept(content.contains("stench"),
+                    content.contains("breeze"),
+                    content.contains("glitter"),
+                    content.contains("bump"),
+                    content.contains("scream"));
+            return res;
         }
     }
 }

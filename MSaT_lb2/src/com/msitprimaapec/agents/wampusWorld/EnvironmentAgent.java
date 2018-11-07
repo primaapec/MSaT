@@ -13,6 +13,8 @@ import jade.lang.acl.ACLMessage;
 public class EnvironmentAgent extends Agent {
 
     private AID spelAgent;
+    private WumpusWorldEnv wwe;
+
 
     @Override
     protected void setup() {

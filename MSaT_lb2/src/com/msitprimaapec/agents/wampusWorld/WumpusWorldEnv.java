@@ -1,10 +1,9 @@
 package com.msitprimaapec.agents.wampusWorld;
 
-import aima.core.agent.impl.DynamicAction;
 import aima.core.environment.wumpusworld.AgentPercept;
 import aima.core.environment.wumpusworld.AgentPosition;
 
-public class WumousWorldEnv {
+public class WumpusWorldEnv {
 
     // room sells each bit represents piece of information
     // 0 - stench, 1 - breeze, 3 - glitter (gold), 4 -  wumpus, 5 - pit
@@ -28,12 +27,12 @@ public class WumousWorldEnv {
     private int wi;
     private int wj;
 
-    public WumousWorldEnv()
+    public WumpusWorldEnv()
     {
         this(1,3,2,3,new int[]{3,3,4},new int[]{1,3,4});
     }
 
-    public WumousWorldEnv(int wi, int wj, int gi, int gj, int[] px, int[] py)
+    public WumpusWorldEnv(int wi, int wj, int gi, int gj, int[] px, int[] py)
     {
         futurePercept = new AgentPercept(false,false,false,false,false);
         this.wi = wi;

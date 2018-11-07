@@ -34,13 +34,13 @@ public class WumpusWorldEnv {
 
     public WumpusWorldEnv(int wi, int wj, int gi, int gj, int[] px, int[] py)
     {
-        futurePercept = new AgentPercept(false,false,false,false,false);
         this.wi = wi;
         this.wj = wj;
         setWumpus(wi, wj);
         setGold(gi, gj);
         for (int i= 0; i < px.length; i++)
             setPit(px[i],px[i]);
+        futurePercept = new AgentPercept(checkStench(1,1),checkBreeze(1,1),checkGlitter(1,1),false,false);
     }
 
     private void setPit(int i, int j) {
